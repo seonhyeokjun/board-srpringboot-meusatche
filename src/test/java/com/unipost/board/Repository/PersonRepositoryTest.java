@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,4 +42,22 @@ class PersonRepositoryTest {
         assertThat(person.getContent()).isEqualTo(content);
     }
 
+    @Test
+    void Time_create(){
+        LocalDateTime localDateTime = LocalDateTime.of(2012, 1, 21, 0, 0);
+        personRepository.save(Person.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        List<Person> personList = personRepository.findAll();
+
+        Person person = personList.get(0);
+
+        System.out.println("------------------------- create=" + person.getCreateDate() + ", modeifeidDate= " + person.getModifiedDate());
+
+        assertThat(person.getCreateDate()).isAfter(localDateTime);
+        assertThat(person.getModifiedDate()).isAfter(localDateTime);
+    }
 }
