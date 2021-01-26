@@ -25,10 +25,17 @@ public class CrudController {
         return personService.findById(id);
     }
 
-    // 저장
+    // 수정
     @PutMapping("/data/board/{id}")
     public Long update(@PathVariable Long id, @RequestBody PersonUpdateRequestDto personUpdateRequestDto){
         return personService.update(id, personUpdateRequestDto);
+    }
+
+    // 삭제
+    @DeleteMapping("/data/board/{id}")
+    public Long delete(@PathVariable Long id) {
+        personService.delete(id);
+        return id;
     }
 
 }
